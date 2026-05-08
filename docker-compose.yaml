@@ -1,0 +1,32 @@
+# This file is used to spin up the RAG relevant services. the mentioned services are used in rag module
+
+version: "3.8"
+
+services:
+  chromadb:
+    image: chromadb/chroma:0.6.3
+    container_name: chromadb-boilerplate-rag
+    ports:
+      - "8000:8000"
+    environment:
+      - IS_PERSISTENT=TRUE
+      - ANONYMIZED_TELEMETRY=TRUE
+    volumes:
+      - chroma_data:/chroma/chroma
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.15.0
+    container_name: elasticsearch-boilerplate-rag
+    environment:
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g
+      - xpack.security.enabled=false
+    ports:
+      - "9200:9200" # REST API
+      - "9300:9300" # internal cluster comms
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+
+volumes:
+  chroma_data:
+  es_data:

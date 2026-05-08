@@ -1,0 +1,30 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "strict": true,
+    "target": "es5",
+    "rootDir": "./src",
+    "outDir": "./server",
+    "incremental": true,
+    "skipLibCheck": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "importsNotUsedAsValues": "remove",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "experimentalDecorators": true,
+    "resolveJsonModule": true,
+    "typeRoots": ["node_modules/@types", "@types"],
+    "types": ["node", "express"],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "exclude": ["node_modules"],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "@types/**/*.d.ts"],
+  "ts-node": {
+    "require": ["tsconfig-paths/register"],
+    "files": true,
+    "transpileOnly": false
+  }
+}
