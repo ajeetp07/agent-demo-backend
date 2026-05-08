@@ -237,10 +237,14 @@ export async function recoverMfa({
   user: IUser;
   code: string;
 }) {
+  // Stored hashes are computed over the raw 8-char code, but users see and
+  // paste the displayed `XXXX-XXXX` form — strip formatting before hashing.
+  const normalizedCode = code.replace(/[\s-]/g, "").toUpperCase();
+
   const recoveryCode = await RecoveryCodeModel.findOneAndUpdate(
     {
       userRef: user._id,
-      code: hashRecoveryCode(code),
+      code: hashRecoveryCode(normalizedCode),
       used: false,
     },
     {
